@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">DriverWay</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="gps_network_not_enabled">Location not enabled</string>
+    <string name="open_location_settings">Go to Settings</string>
+    <string name="Cancel">Cancel</string>
+
+    <string-array name="Quality_Type1">
+        <item>A+</item>
+        <item>A-</item>
+        <item>B+</item>
+        <item>B-</item>
+        <item>O+</item>
+        <item>O-</item>
+        <item>AB+</item>
+        <item>AB-</item>
+
+    </string-array>
+
+</resources>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="in.equipshare.driverway">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="Settings.ACTION_SECURITY_SETTINGS"/>
+    <uses-permission android:name="Settings.ACTION_LOCATION_SOURCE_SETTINGS"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyA42alhYNHNRX0iupToXMurlUn7OLHQYF0" />
+
+        <!--<meta-data-->
+            <!--android:name="com.google.android.gms.version"-->
+            <!--android:value="@integer/google_play_services_version" />-->
+
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".SplashActivity"
+            android:theme="@style/App"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <!-- <activity -->
+        <!-- android:name=".MobileOTP" -->
+        <!-- android:label="Mobile" /> -->
+        <activity
+            android:name=".Register"
+            android:label="Sign Up"
+            android:screenOrientation="portrait"/>
+        <!-- <activity -->
+        <!-- android:name=".Verfication" -->
+        <!-- android:label="Verify Code" /> -->
+        <activity
+            android:name=".Login"
+            android:label="Login"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Forgetpin"
+            android:label="Create New Pin"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".MobileAuthActivity"
+            android:theme="@style/App"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".EditProfile"
+            android:label="Edit Profile"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ChangePin"
+            android:label="Change Pin"
+            android:parentActivityName=".EditProfile"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".EditMobile"
+            android:theme="@style/App"
+            android:screenOrientation="portrait"></activity>
+    </application>
+
+</manifest>
