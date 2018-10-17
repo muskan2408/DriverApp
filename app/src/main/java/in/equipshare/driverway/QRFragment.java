@@ -29,6 +29,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import java.util.HashMap;
 
@@ -52,6 +53,7 @@ public class QRFragment extends Fragment {
     private static final String IMAGE_DIRECTORY = "/QRcodeDemonuts";
     Bitmap bitmap ;
     Model model;
+    MultiFormatWriter multiFormatWriter;
     Gson gson = new GsonBuilder().setLenient().create();
     OkHttpClient client = new OkHttpClient();
     private static Retrofit.Builder builder=new Retrofit.Builder().baseUrl(Constants.BASE_URL)
@@ -97,6 +99,7 @@ public class QRFragment extends Fragment {
                 progressDialog.show();
                 Log.d("fsddddddddddsfffff","heloooooooo");
                         HashMap<String, String> hashMap = session.getUserDetails();
+            multiFormatWriter =new MultiFormatWriter();
 
                         token=hashMap.get(SessionManagement.KEY_TOKEN);
                         Call<Model> call= retrofitInterface.qrcode(token);
@@ -107,13 +110,42 @@ public class QRFragment extends Fragment {
                                  if(model.getSuccess()){
                                      String qr =model.getMsg();
                                      try {
-                                         bitmap = TextToImageEncode(model.getMsg());
+                                         BitMatrix bitMatrix=multiFormatWriter.encode(model.getMsg(),
+                                                 BarcodeFormat.QR_CODE,200,200);
+                                         BarcodeEncoder barcodeEncoder=new BarcodeEncoder();
+                                         bitmap=barcodeEncoder.createBitmap(bitMatrix);
+                                         i.setImageBitmap(bitmap);
+                                       //  bitmap = TextToImageEncode(model.getMsg());
+                                         progressDialog.dismiss();
                                      } catch (WriterException e) {
                                          e.printStackTrace();
                                      }
 
-                                     i.setImageBitmap(bitmap);
+                                    // i.setImageBitmap(bitmap);
 
+                                 }
+                                 else{
+                                     if((model.getMsg()).equals("No Order Found"))
+                                     {
+                                         progressDialog.cancel();
+                                         new AlertDialog.Builder(getActivity()).setTitle("You don't have any order")
+                                                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                                     @Override
+                                                     public void onClick(DialogInterface dialogInterface, int i) {
+                                                         progressDialog.dismiss();
+                                                     }
+                                                 }).show();
+                                     }
+                                  if(model.getMsg().equals("No Supplier Found")) {
+                                      progressDialog.cancel();
+                                      new AlertDialog.Builder(getActivity()).setTitle("Not Registered with Supplier")
+                                              .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                                  @Override
+                                                  public void onClick(DialogInterface dialogInterface, int i) {
+                                                      progressDialog.dismiss();
+                                                  }
+                                              }).show();
+                                  }
                                  }
                              }
 
@@ -138,7 +170,7 @@ public class QRFragment extends Fragment {
     }
     private Bitmap TextToImageEncode(String Value) throws WriterException {
 
-        progressDialog.dismiss();
+
 
         BitMatrix bitMatrix;
         try {

@@ -14,7 +14,7 @@ import retrofit2.http.POST;
 public interface RetrofitInterface {
 
     @FormUrlEncoded
-    @POST("/api/register")
+    @POST("/driver/register")
     Call<Model> register(@Field(value = "contact") String contact,
                          @Field(value = "pin" ) String pin,
                          @Field(value = "email") String email,
@@ -24,37 +24,38 @@ public interface RetrofitInterface {
 
 
     @FormUrlEncoded
-    @POST("/api/login")
+    @POST("/driver/login")
     Call<Model> login(@Field(value = "contact") String contact,@Field(value = "pin") String pin);
 
     @FormUrlEncoded
-    @POST("/api/checkMobile")
+    @POST("/driver/checkMobile")
     Call<Model> checkMobile(@Field(value="contact")String contact);
 
     @FormUrlEncoded
-    @POST("/api/updatemobile")
+    @POST("/driver/updatemobile")
     Call<Model> updateMobile(@Header("authorization")String authtoken,@Field(value="contact")String contact);
 
     @FormUrlEncoded
-    @POST("/api/changepin")
+    @POST("/driver/changepin")
     Call<Model> changePin(@Header("authorization")String authtoken,@Field(value ="oldpin")String oldpin,
                           @Field(value = "newpin")String newpin);
 
     @FormUrlEncoded
-    @POST("/api/profile")
+    @POST("/driver/profile")
     Call<Model> updateProfile(@Header("authorization")String authtoken,@Field(value = "name")String name,@Field(value="email") String email
     ,@Field(value ="bloodgroup")String bloodgroup);
 
-    @GET("/api/profile")
+    @GET("/driver/profile")
     Call<Model>show_profile(@Header("authorization")String authtoken);
 
-    @GET("/api/")
+    @GET("/driver/")
     Call<Model>session_manage(@Header("authorization")String authtoken);
 
-    @GET("/api/qrcode")
+    @GET("/driver/qrcode")
     Call<Model>qrcode(@Header("authorization")String authtoken);
 
-
+    @GET("/driver/navigation")
+    Call<Model>navigation(@Header("authorization")String authtoken);
 
 
 

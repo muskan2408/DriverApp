@@ -74,8 +74,8 @@ public class MainActivity extends AppCompatActivity {
         layoutParams.setBehavior(new BottomNavigationBehavior());
 
         // load the store fragment by default
-        toolbar.setTitle("Generate QR Code");
-        loadFragment(new QRFragment());
+        toolbar.setTitle("Maps");
+        loadFragment(new MapsFragment());
 
         profile_getrequest();
 

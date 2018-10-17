@@ -105,7 +105,7 @@ public class Login extends AppCompatActivity implements Serializable{
     private void startLogin(final String mobile, final String pin) {
         if(pinno.getEditText().getText().toString().isEmpty()){
             progressDialog.dismiss();
-            pinno.setError("Name is required");
+            pinno.setError("Mobile is required");
             pinno.requestFocus();
             return;
         }

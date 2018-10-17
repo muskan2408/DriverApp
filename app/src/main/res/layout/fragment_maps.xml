@@ -95,6 +95,16 @@
             android:background="@color/colorPrimary"
             android:text="Start Navigation"
             android:textColor="@color/white" />
+        <Button
+            android:id="@+id/getCustomersite"
+            android:layout_width="355dp"
+            android:layout_height="35dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="73dp"
+            android:background="@color/colorPrimary"
+            android:text="Get Construction Site Location"
+            android:textColor="@color/white" />
 
     </RelativeLayout>
 

@@ -17,9 +17,35 @@ public class Model implements Parcelable{
     @SerializedName("msg")
     @Expose
     private String msg;
+    @SerializedName("lat")
+    @Expose
+    private double lat;
+    @SerializedName("lon")
+    @Expose
+
+    private double lon;
     @SerializedName("user")
     @Expose
     private User user;
+
+
+    public double getLat() {
+        return lat;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public double getLon() {
+        return lon;
+    }
+
+    public void setLon(double lon) {
+        this.lon = lon;
+    }
+
+
 
     protected Model(Parcel in) {
         byte tmpSuccess = in.readByte();

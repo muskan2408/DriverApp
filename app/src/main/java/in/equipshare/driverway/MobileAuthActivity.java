@@ -103,7 +103,7 @@ public class MobileAuthActivity extends AppCompatActivity {
 
                 if (btnType==0) {
 
-                     phoneNumber = "+91"+phoneET.getEditText().getText().toString();
+                     phoneNumber = "+91"+phoneET.getEditText().getEditableText().toString();
 
                     if(phoneNumber.length()==13){
 
@@ -135,11 +135,8 @@ public class MobileAuthActivity extends AppCompatActivity {
                             @Override
                             public void onFailure(Call<Model> call, Throwable t) {
                                 phoneET.setError("Mobile number already exist...");
-
                             }
                         });
-
-
 
                     }else {
                         phoneET.setError("Please enter a valid number...");

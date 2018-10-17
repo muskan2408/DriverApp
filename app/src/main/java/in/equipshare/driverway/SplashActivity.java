@@ -192,6 +192,7 @@ public class SplashActivity extends AppCompatActivity {
             new AlertDialog.Builder(SplashActivity.this)
                     .setTitle("No Internet Connection")
                     .setMessage("Your device is not connected to Internet")
+                    .setCancelable(false)
                     .setPositiveButton("Go To Settings", new DialogInterface.OnClickListener()
                     {
                         @Override
@@ -215,6 +216,7 @@ public class SplashActivity extends AppCompatActivity {
             new AlertDialog.Builder(SplashActivity.this)
                     .setTitle("Unable to Access Location")
                     .setMessage("Turn on your location to move further")
+                    .setCancelable(false)
                     .setPositiveButton("Go To Settings", new DialogInterface.OnClickListener()
                     {
                         @Override
@@ -325,6 +327,7 @@ public class SplashActivity extends AppCompatActivity {
                                 {
                                     new AlertDialog.Builder(SplashActivity.this)
                                             .setTitle("Can't Connect to Server")
+                                            .setCancelable(false)
                                             .setMessage("Can't Connect to server Please Check after some time")
                                             .setPositiveButton("Exit", new DialogInterface.OnClickListener() {
                                                 @Override
@@ -353,6 +356,7 @@ public class SplashActivity extends AppCompatActivity {
                                 {
                                     new AlertDialog.Builder(SplashActivity.this)
                                             .setMessage("Can't Connect to server Please Check after some time")
+                                            .setCancelable(false)
                                             .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialogInterface, int i) {
