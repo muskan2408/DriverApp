@@ -1,6 +1,8 @@
 package in.equipshare.driverway;
 
 public class Constants {
-    public static final String BASE_URL = "http://2abf6af9.ngrok.io";
+    public static final String BASE_URL = "http://concreteapp.herokuapp.com";
+    public static final String BASE_URL_MAP = "https://maps.googleapis.com/";
+
 
 }

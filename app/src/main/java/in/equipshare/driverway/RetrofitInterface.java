@@ -1,15 +1,19 @@
 package in.equipshare.driverway;
 
 import java.util.List;
+import java.util.Map;
 
 import in.equipshare.driverway.model.Model;
+import in.equipshare.driverway.model.Result;
 import in.equipshare.driverway.model.User;
 import retrofit2.Call;
 import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.QueryMap;
 
 public interface RetrofitInterface {
 
@@ -57,6 +61,8 @@ public interface RetrofitInterface {
     @GET("/driver/navigation")
     Call<Model>navigation(@Header("authorization")String authtoken);
 
+    @GET("/maps/api/directions/json")
+    Call<Result>getpoint(@QueryMap Map<String, String> params);
 
 
 
