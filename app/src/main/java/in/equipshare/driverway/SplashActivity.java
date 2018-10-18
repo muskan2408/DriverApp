@@ -120,6 +120,7 @@ public class SplashActivity extends AppCompatActivity {
                         Log.d(TAG, "location services permission granted");
                         // process the normal flow
                         Intent i = new Intent(SplashActivity.this, Login.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(i);
                         finish();
                         //else any one or both the permissions are not granted
@@ -305,6 +306,7 @@ public class SplashActivity extends AppCompatActivity {
                     {
                         Log.e("TAG", "execterd");
                         Intent i=new Intent(SplashActivity.this,Login.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(i);
                         finish();
 

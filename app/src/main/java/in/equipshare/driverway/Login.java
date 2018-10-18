@@ -58,7 +58,7 @@ public class Login extends AppCompatActivity implements Serializable{
          account=(Button)findViewById(R.id.create);
          session=new SessionManagement(getApplicationContext());
 
-
+         forget.setVisibility(View.GONE);
         prefManager=new PrefManager(getApplicationContext());
 //        Toast.makeText(getApplicationContext(),
 //        "User Login Status: " + prefManager.isUserLoggedIn(),
@@ -71,6 +71,7 @@ public class Login extends AppCompatActivity implements Serializable{
             @Override
             public void onClick(View v) {
                 Intent i=new Intent (Login.this,Forgetpin.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);
 
             }
@@ -80,6 +81,7 @@ public class Login extends AppCompatActivity implements Serializable{
             @Override
             public void onClick(View v) {
                 Intent i=new Intent(Login.this,MobileAuthActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);
             }
         });

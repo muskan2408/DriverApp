@@ -160,6 +160,7 @@ Model model;
                                  @Override
                                  public void onClick(DialogInterface dialogInterface, int i) {
                                      Intent intent=new Intent(Register.this,Login.class);
+                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                                      startActivity(intent);
                                      finish();
                                  }

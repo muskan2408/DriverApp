@@ -91,6 +91,7 @@ import java.util.List;
 import in.equipshare.driverway.model.Model;
 import in.equipshare.driverway.model.PlaceInfo;
 import in.equipshare.driverway.utils.SessionManagement;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -187,15 +188,12 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback , Googl
         }
         mSearchText = (AutoCompleteTextView) view.findViewById(R.id.input_search);
         mgps = (ImageView) view.findViewById(R.id.ic_gps);
-       mInfo = (ImageView) view.findViewById(R.id.place_info);
+        mInfo = (ImageView) view.findViewById(R.id.place_info);
         mPlacePicker = (ImageView) view.findViewById(R.id.place_picker);
         navigation=(Button)view.findViewById(R.id.navigation);
         getConstructionsite=(Button)view.findViewById(R.id.getCustomersite);
         getLocationPermission();
         session=new SessionManagement(getActivity());
-
-        polylines = new ArrayList<>();
-
         mgps.setVisibility(View.GONE);
         navigation.setVisibility(View.GONE);
 
@@ -361,6 +359,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback , Googl
                                     Uri gmmIntentUri = Uri.parse("google.navigation:q="+String.valueOf(lat)+","+String.valueOf(lon));
                                     Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
                                     mapIntent.setPackage("com.google.android.apps.maps");
+                                    mapIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                                     startActivity(mapIntent);
                                 }
                             });
@@ -552,80 +551,22 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback , Googl
         Routing routing = new Routing.Builder()
                 .travelMode(AbstractRouting.TravelMode.DRIVING)
                 .withListener(this)
-                .alternativeRoutes(true)
-                .waypoints(start,pickUpLatLng, pickUpLatLng)
+                .alternativeRoutes(false)
+                .waypoints(start, pickUpLatLng)
                 .build();
         routing.execute();
+        Call<ResponseBody> call=retrofitInterface.direction("https://maps.googleapis.com/maps/api/directions/json?origin="+ start.toString() + "&destination="+ pickUpLatLng.toString()+"&key=AIzaSyA42alhYNHNRX0iupToXMurlUn7OLHQYF0");
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
+            }
 
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
 
-//        GeoApiContext context = new GeoApiContext.Builder()
-//                .apiKey("AIzaSyA42alhYNHNRX0iupToXMurlUn7OLHQYF0")
-//                .build();
-//        DirectionsApiRequest req = DirectionsApi.getDirections(context, "41.385064,2.173403", "40.416775,-3.70379");
-//        try {
-//            DirectionsResult res = req.await();
-//
-//            //Loop through legs and steps to get encoded polylines of each step
-//            if (res.routes != null && res.routes.length > 0) {
-//                DirectionsRoute route = res.routes[0];
-//
-//                if (route.legs !=null) {
-//                    for(int i=0; i<route.legs.length; i++) {
-//                        DirectionsLeg leg = route.legs[i];
-//                        if (leg.steps != null) {
-//                            for (int j=0; j<leg.steps.length;j++){
-//                                DirectionsStep step = leg.steps[j];
-//                                if (step.steps != null && step.steps.length >0) {
-//                                    for (int k=0; k<step.steps.length;k++){
-//                                        DirectionsStep step1 = step.steps[k];
-//                                        EncodedPolyline points1 = step1.polyline;
-//                                        if (points1 != null) {
-//                                            //Decode polyline and add points to list of route coordinates
-//                                            List<com.google.maps.model.LatLng> coords1 = points1.decodePath();
-//                                            for (com.google.maps.model.LatLng coord1 : coords1) {
-//                                                path.add(new LatLng(coord1.lat, coord1.lng));
-//                                            }
-//                                        }
-//                                    }
-//                                } else {
-//                                    EncodedPolyline points = step.polyline;
-//                                    if (points != null) {
-//                                        //Decode polyline and add points to list of route coordinates
-//                                        List<com.google.maps.model.LatLng> coords = points.decodePath();
-//                                        for (com.google.maps.model.LatLng coord : coords) {
-//                                            path.add(new LatLng(coord.lat, coord.lng));
-//                                        }
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        } catch(Exception ex) {
-//            Log.e(TAG, ex.getLocalizedMessage());
-//        }
-//
-//        //Draw the polyline
-//        if (path.size() > 0) {
-//            PolylineOptions opts = new PolylineOptions().addAll(path).color(Color.BLUE).width(5);
-//            mMap.addPolyline(opts);
-//        }
-//
-//        mMap.getUiSettings().setZoomControlsEnabled(true);
-
-//        start = new LatLng(18.015365, -77.499382);
-//       LatLng waypoint= new LatLng(18.01455, -77.499333);
-//        pickUpLatLng = new LatLng(18.012590, -77.500659);
-//
-//        Routing routing = new Routing.Builder()
-//                .travelMode(Routing.TravelMode.WALKING)
-//                .withListener(this)
-//                .waypoints(start, waypoint, pickUpLatLng
-//                )
-//                .build();
-//        routing.execute();
+            }
+        });
     }
 
     private void initMap() {

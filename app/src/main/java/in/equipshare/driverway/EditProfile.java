@@ -93,6 +93,7 @@ public class EditProfile extends AppCompatActivity {
                                         @Override
                                         public void onClick(DialogInterface dialogInterface, int i) {
                                             Intent intent = new Intent(EditProfile.this, MainActivity.class);
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                                             startActivity(intent);
                                             finish();
                                         }
@@ -116,6 +117,7 @@ public class EditProfile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i=new Intent(EditProfile.this,ChangePin.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);
             }
         });
@@ -124,7 +126,8 @@ public class EditProfile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                    Intent intent=new Intent(EditProfile.this,EditMobile.class);
-                   startActivity(intent);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             }
         });
     }
