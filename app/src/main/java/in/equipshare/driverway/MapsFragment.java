@@ -66,9 +66,11 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.gson.Gson;
 import com.google.maps.DirectionsApi;
 import com.google.maps.DirectionsApiRequest;
 import com.google.maps.GeoApiContext;
+import com.google.maps.android.PolyUtil;
 import com.google.maps.model.DirectionsLeg;
 import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.DirectionsRoute;
@@ -87,9 +89,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import in.equipshare.driverway.model.Model;
 import in.equipshare.driverway.model.PlaceInfo;
+import in.equipshare.driverway.model.Result;
 import in.equipshare.driverway.utils.SessionManagement;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -134,8 +138,10 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback , Googl
     public static Retrofit retrofit=builder.build();
     RetrofitInterface retrofitInterface=retrofit.create(RetrofitInterface.class);
 
-
-
+    private static Retrofit.Builder builder1=new Retrofit.Builder().baseUrl(Constants.BASE_URL_MAP)
+            .addConverterFactory(GsonConverterFactory.create());
+    public static Retrofit retrofit1=builder1.build();
+    RetrofitInterface retrofitInterface1=retrofit1.create(RetrofitInterface.class);
     private static final LatLngBounds LAT_LNG_BOUNDS = new LatLngBounds(new LatLng(-40, -168), new LatLng(71, 136));
     private GoogleApiClient mGoogleApiClient;
     // TODO: Rename and change types of parameters
@@ -397,7 +403,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback , Googl
                 });
 
 
-
             }
         });
     }
@@ -526,7 +531,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback , Googl
                         mMap.addMarker(options);
                         options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
                 erasePolylines();
-                getRouteMarker(new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude()),placeInfo.getLatLng());
+           //     getRouteMarker(new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude()),placeInfo.getLatLng());
 
 
             }catch(NullPointerException e)
@@ -548,7 +553,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback , Googl
 
 //        progressDialog = ProgressDialog.show(this, "Please wait.",
 //                "Fetching route information.", true);
-        Log.e("routing........",pickUpLatLng.toString()+" "+start.toString());
+    /*    Log.e("routing........",pickUpLatLng.toString()+" "+start.toString());
         Routing routing = new Routing.Builder()
                 .travelMode(AbstractRouting.TravelMode.DRIVING)
                 .withListener(this)
@@ -556,8 +561,40 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback , Googl
                 .waypoints(start,pickUpLatLng, pickUpLatLng)
                 .build();
         routing.execute();
+*/
+        Map<String,String> map=new HashMap<>();
+        map.put("origin",String.valueOf(start.latitude)+","+String.valueOf(start.longitude));
+        map.put("destination",String.valueOf(pickUpLatLng.latitude)+","+String.valueOf(pickUpLatLng.longitude));
+        map.put("mode","driving");
+        map.put("key","AIzaSyA42alhYNHNRX0iupToXMurlUn7OLHQYF0");
+        Call<Result> call1=retrofitInterface1.getpoint(map);
+        call1.enqueue(new Callback<Result>() {
+            @Override
+            public void onResponse(Call<Result> call, Response<Result> response) {
+                Log.e(TAG, "onResponse: Mapfragment"+new Gson().toJson(response.body()) );
+                Result result=response.body();
+                int size=result.getRoutes().get(0).getLegs().get(0).getSteps().size();
+                String[] polyline=new String[size];
+                for(int i=0;i<size;i++)
+                {
+                    polyline[i]=result.getRoutes().get(0).getLegs().get(0).getSteps().get(i).getPolyline().getPoints();
+                }
+                for(int j=0;j<size;j++)
+                {
+                    PolylineOptions polylineOptions=new PolylineOptions();
+                    polylineOptions.color(Color.BLUE);
+                    polylineOptions.width(10);
+                    polylineOptions.addAll(PolyUtil.decode(polyline[j]));
+                    mMap.addPolyline(polylineOptions);
+                }
+            }
 
-
+            @Override
+            public void onFailure(Call<Result> call, Throwable t) {
+                Log.e(TAG, "onFailure:MapFragment "+t.getMessage());
+                Toast.makeText(getContext(),t.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        });
 
 //        GeoApiContext context = new GeoApiContext.Builder()
 //                .apiKey("AIzaSyA42alhYNHNRX0iupToXMurlUn7OLHQYF0")
